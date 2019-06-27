@@ -7,7 +7,9 @@ import requests
 def arlotime_to_time( timestamp ):
     return timestamp/1000
 
-def time_to_arlotime( timestamp=time.time() ):
+def time_to_arlotime( timestamp=None ):
+    if timestamp is None:
+        timestamp = time.time()
     return int(timestamp*1000)
 
 def arlotime_to_datetime( timestamp ):
@@ -25,6 +27,8 @@ def http_get( url,filename=None ):
     try:
         ret = requests.get(url)
     except requests.exceptions.SSLError as error:
+        return False
+    except:
         return False
 
     if ret.status_code != 200:
